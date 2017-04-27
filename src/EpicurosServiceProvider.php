@@ -5,7 +5,7 @@ namespace AndrewDalpino\LaravelEpicuros;
 use AndrewDalpino\LaravelEpicuros\Commands\GenerateRSAKeys;
 use AndrewDalpino\LaravelEpicuros\Commands\GenerateSharedSecret;
 use AndrewDalpino\Epicuros\Epicuros;
-use AndrewDalpino\Epicuros\KeyRepository;
+use AndrewDalpino\Epicuros\VerifyingKeyRepository;
 use Illuminate\Support\ServiceProvider;
 
 class EpicurosServiceProvider extends ServiceProvider
@@ -50,7 +50,7 @@ class EpicurosServiceProvider extends ServiceProvider
                 config('epicuros.signing_key.identifier'),
                 config('epicuros.signing_key.key'),
                 config('epicuros.signing_key.algorithm'),
-                new KeyRepository(config('epicuros.verifying_keys', [])),
+                new VerifyingKeyRepository(config('epicuros.verifying_keys', [])),
                 [
                     'expire' => config('epicuros.tokens_expire', 60),
                 ]
