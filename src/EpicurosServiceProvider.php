@@ -47,11 +47,12 @@ class EpicurosServiceProvider extends ServiceProvider
     {
         $this->app->singleton(Epicuros::class, function () {
             return new Epicuros(
-                config('epicuros.algorithm'),
-                new KeyRepository(config('epicuros.signing_keys', [])),
+                config('epicuros.signing_key.identifier'),
+                config('epicuros.signing_key.key'),
+                config('epicuros.signing_key.algorithm'),
                 new KeyRepository(config('epicuros.verifying_keys', [])),
                 [
-                    'expire' => config('epicuros.token_expire', 60),
+                    'expire' => config('epicuros.tokens_expire', 60),
                 ]
             );
         });

@@ -4,51 +4,52 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Token Signing Algrithm
+    | Signing Key
     |--------------------------------------------------------------------------
     |
-    | The algorithm to use when signing a token. Possible values are
-    | 'RS256' for asychnonous (private/public) signing/verifying, or
-    | 'HS256', 'HS384', and 'HS512' to use shared keys.
+    | The key identifier is used to allow verification key lookup on
+    | the receiving end.
     |
-    | Default: 'HS512'
+    | Possible values for algorithm are 'RS256' for asychnonous
+    | (private/public) signing/verifying, or 'HS256', 'HS384', and
+    | 'HS512' to use a shared secret.
+    |
+    | The key field  is either the path to the RSA private key or
+    | a shared secret in a shared key configuration.
+    |
+    | Example: 'signing_key' => [
+    |   'identifier' => 'foo',
+    |   'algorithm' => 'RS256',
+    |   'key' => storage_path('/certs/foo-private.key',
+    | ],
+    |
+    | Example: 'signing_key' => [
+    |   'identifier' => 'bar',
+    |   'algorithm' => 'HS512',
+    |   'key' => '6a628a71c4bc2c76048949a72ef9ac0d35d0dc5f3...',
+    | ],
     */
 
-    'algorithm' => 'HS512',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Signing Keys
-    |--------------------------------------------------------------------------
-    |
-    | This is either the path to the RSA private key (from the local
-    | storage folder) or a shared secret in a shared key configuration.
-    |
-    | Default: none
-    | Example: 'foo' => '/certs/foo-private.key',
-    | Example: 'app_name' => '6a628a71c4bc2c76048949a72ef9ac0d35d0dc5f3...',
-    | Example: 'YourKeyId' => 'YourKey!',
-    */
-
-    'signing_keys' => [
-        //
+    'signing_key' => [
+        'identifier' => ''
+        'algorithm' => 'HS384',
+        'key' => '',
     ],
 
 
     /*
     |--------------------------------------------------------------------------
-    | Verifying Keys
+    | Verifying Key Mappings
     |--------------------------------------------------------------------------
     |
-    | These are the mappings of token issuers to their respective RSA
-    | public keys or shared secrets. The key is the name of the token
-    | issuer, and the value is either the path to the public key (from
-    | the local storage folder) or the shared secret.
+    | These are the mappings of key identifiers to their respective RSA
+    | public keys or shared secrets. You can pass either the path to the
+    | public key or the shared secret.
     |
-    | Default: none
-    | Example: 'foo' => '/certs/foo-public.key',
-    | Example: 'app_name' => '6a628a71c4bc2c76048949a72ef9ac0d35d0dc5f3...',
-    | Example: 'TheirKeyId' => 'TheirKey!',
+    | Example: 'verifying_keys' => [
+    |   'foo' => '/certs/foo-public.key',
+    |   'bar' => '6a628a71c4bc2c76048949a72ef9ac0d35d0dc5f3...',
+    | ],
     */
 
     'verifying_keys' => [
@@ -67,6 +68,6 @@ return [
     | Default: 60,
     */
 
-    'token_expire' => 60,
+    'tokens_expire' => 60,
 
 ];
