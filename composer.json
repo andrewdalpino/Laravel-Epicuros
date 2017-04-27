@@ -1,5 +1,5 @@
 {
-    "name": "andrewdalpino/epicuros",
+    "name": "andrewdalpino/laravel-epicuros",
     "description": "An Epicuros service provider for Laravel and Lumen.",
     "license": "MIT",
     "keywords": ["laravel", "lumen", "auth", "jwt", "authentication", "context", "microservices"],
