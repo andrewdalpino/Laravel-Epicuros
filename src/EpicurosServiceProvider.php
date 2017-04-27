@@ -45,7 +45,7 @@ class EpicurosServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Epicuros::class, function () use ($key) {
+        $this->app->singleton(Epicuros::class, function () {
             return new Epicuros(
                 config('epicuros.algorithm'),
                 new KeyRepository(config('epicuros.signing_keys', [])),
