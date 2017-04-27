@@ -34,7 +34,11 @@ class AcquireContext
     {
         $token = $request->bearerToken();
 
-        $context = $this->epicuros->acquireContext($token);
+        try {
+            $context = $this->epicuros->acquireContext($token);
+        } catch (\Exception $e) {
+            $context = Context::build();
+        }
 
         $request->merge(['context' => $context]);
 
