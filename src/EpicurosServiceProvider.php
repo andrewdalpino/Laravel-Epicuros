@@ -2,10 +2,11 @@
 
 namespace AndrewDalpino\LaravelEpicuros;
 
+use AndrewDalpino\Epicuros\Epicuros;
 use AndrewDalpino\LaravelEpicuros\Commands\GenerateRSAKeys;
 use AndrewDalpino\LaravelEpicuros\Commands\GenerateSharedSecret;
-use AndrewDalpino\Epicuros\Epicuros;
-use AndrewDalpino\Epicuros\VerifyingKeyRepository;
+use Laravel\Lumen\Application as Lumen;
+use Illuminate\Foundation\Application as Laravel;
 use Illuminate\Support\ServiceProvider;
 
 class EpicurosServiceProvider extends ServiceProvider
@@ -31,10 +32,12 @@ class EpicurosServiceProvider extends ServiceProvider
             ]);
         }
 
-        if (! $this->isLumen()) {
+        if ($this->app instanceof Laravel) {
             $this->publishes([
                 __DIR__ . '/config/epicuros.php' => config_path('epicuros.php'),
             ]);
+        } elseif ($this->app instanceof Lumen) {
+            $this->app->configure('epicuros');
         }
     }
 
@@ -50,7 +53,7 @@ class EpicurosServiceProvider extends ServiceProvider
                 config('epicuros.signing_key.identifier'),
                 config('epicuros.signing_key.key'),
                 config('epicuros.signing_key.algorithm'),
-                new VerifyingKeyRepository(config('epicuros.verifying_keys', [])),
+                config('epicuros.verifying_keys', []),
                 [
                     'expire' => config('epicuros.tokens_expire', 60),
                 ]
@@ -69,13 +72,5 @@ class EpicurosServiceProvider extends ServiceProvider
             Epicuros::class,
             'epicuros',
         ];
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isLumen() : bool
-    {
-        return str_contains($this->app->version(), 'Lumen');
     }
 }
