@@ -5,7 +5,7 @@ namespace AndrewDalpino\LaravelEpicuros\Middleware;
 use AndrewDalpino\Epicuros\Epicuros;
 use Closure;
 
-class Gatekeeper
+class AcquireContext
 {
     /**
      * @var  \AndrewDalpino\Epicuros\Epicuros  $epicuros
@@ -31,7 +31,9 @@ class Gatekeeper
      */
     public function handle($request, Closure $next)
     {
-        $this->epicuros->authorize($request->bearerToken());
+        $request->merge([
+            'claims' => $this->epicuros->getTokenClaims($request->bearerToken()),
+        ]);
 
         return $next($request);
     }

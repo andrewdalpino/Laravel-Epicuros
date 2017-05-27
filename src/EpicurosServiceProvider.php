@@ -5,8 +5,8 @@ namespace AndrewDalpino\LaravelEpicuros;
 use AndrewDalpino\Epicuros\Epicuros;
 use AndrewDalpino\LaravelEpicuros\Commands\GenerateRSAKeys;
 use AndrewDalpino\LaravelEpicuros\Commands\GenerateSharedSecret;
-use Laravel\Lumen\Application as Lumen;
-use Illuminate\Foundation\Application as Laravel;
+use Laravel\Lumen\Application as LumenApplication;
+use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
 
 class EpicurosServiceProvider extends ServiceProvider
@@ -32,11 +32,11 @@ class EpicurosServiceProvider extends ServiceProvider
             ]);
         }
 
-        if ($this->app instanceof Laravel) {
+        if ($this->app instanceof LaravelApplication) {
             $this->publishes([
                 __DIR__ . '/config/epicuros.php' => config_path('epicuros.php'),
             ]);
-        } elseif ($this->app instanceof Lumen) {
+        } elseif ($this->app instanceof LumenApplication) {
             $this->app->configure('epicuros');
         }
     }
