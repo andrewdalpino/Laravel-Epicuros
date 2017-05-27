@@ -5,7 +5,7 @@ namespace AndrewDalpino\LaravelEpicuros\Middleware;
 use AndrewDalpino\Epicuros\Epicuros;
 use Closure;
 
-class AcquireContext
+class AcquireTokenClaims
 {
     /**
      * @var  \AndrewDalpino\Epicuros\Epicuros  $epicuros
